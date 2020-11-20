@@ -1,0 +1,27 @@
+language: java
+services:
+  - docker
+cache:
+  directories:
+    - ".autoconf"
+    - "$HOME/.m2"
+env:
+  global:
+    - GCP_PROJECT_ID=pgr301-m99
+    - IMAGE=gcr.io/pgr301-m99/exam
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+    - secure: fQXohtul7jNSJB8RU4GudBQ6taiWcIn1M2HokOtzCdVAGmJArkici5cP4U7rKRB8XtxPGnyEU4iIa4O/8FWfS8zm/JHEuLQBJDZlQ0l0WxdmhxhX5lVJKJvYHIv+UFnhiUdx1ssJz8W0FxHad0LaRhRmOQGwYoRihY7Q4nfcOt1C/IqP9ZQHXtHAvSrD8b7lJ2MOqjfFD4sdWXifB2qkS5lVYSBlVN8gj+xCdftX99xVdmr7+nNvzSEW5e+d4qA3clzJ/IGLk19ndTrIghrqZHO4Q3Mp9pYNDgIIrNmcTsKNWUJEIsWXfwseU1tDursONSzOGrCeSWkmfjQ8N3vnMKI5+i1OHWS+bxtD0X6FDX/5A3NAlkuyExObtXlOKn4r+vt0mE8mTzCx7J6TW56DITqS/0Ev2Y7A7XiF9qdHQyZhUSZrYOAO5pgdYoRAIgv2IVieXcbOFPpqm3C8izNEaT8y0Z/UoErPXGMXTbCfumZxsyRgbocZQMMybEug5dA1WF6MXp3PwUNxJL+bhZ80uFhqePwC4oeup+/h0pa4cXGOVUVmAm1uYc8dGBRyR41ZlCsW7kyukNfRXtoD/JdZeNjc6qFv24tclhI6lyU2lg819W9+IdUebePU525q9jyXhZbfpkA5Y/C14FD7HgwFhPo3euQz+IutwwrzMqPLEso=
+    - secure: 0SU8c/y5Ghy6wTZulY8q74GzpLR4EOjp39WygcFaDGxiyWB7mGlHKKQwTIXrCqjXV4CGclKLSttfC77AfvkUbJWjt0h0THXcz0eDgeKIEI5HVNwSvR+d6kSv6ze89NnExmbmCyzCuCw+fuuNK9AMrW6nCju6hGKBMwgFfqX+bbh6IWUMBCZnpcXgV72QWshneJtl+qX+X/My20YJo/e1IGqXfxkvhip1GAs5jVL0WKJ3nC7Mr2BxHnpcWcutM33jJ8DRm9hqXakBdlhBQZqDpXyQFCGW+osSooao1GnPlaeWq6ol6SaA6YXQGnG4MKdSiL/NFRyxqV372v3lKOtMFa8bq/W4XGWoSkLiGvqutLLVZi8/xQ3wuAWlFpRr4KWKzhFCQkMBTshvJ+SnAKw5Q2J/3AjwjYevkFL8g8M54AEbOvFYlVowZ6I+YalST68LYeI03dEkOUvE/ST+JRD+Y/9XlQXOvUHqA2eM+1b3gBRExVhoTPWXFZkNf/qRh8a8Xw+DTpoKJ5SZVgWmBmHbRKOvNqvbacyclRBIl9XDh/NAvHNvDIiFgpmOPSukOJDeYEejnpNmXqIc8NwqOK5IAgVA5yNMxSG2tiva2ZrZwsGtpMKShkdKuBoyEvhkl2Bb+EyOzv4gPILd61VAkMnC9GUvnySaujtsWRi1ViMRvBg=
+before_install:
+  - openssl aes-256-cbc -K $encrypted_98d237b7dbf4_key -iv $encrypted_98d237b7dbf4_iv -in google-key.json.enc -out google-key.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null
+  - source "$HOME/google-cloud-sdk/path.bash.inc"
+  - gcloud auth activate-service-account --key-file=google-key.json
+  - gcloud auth configure-docker
+  - gcloud config set project "${GCP_PROJECT_ID}"
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash ./scripts/docker_push.sh
+  on:
+    branch: main
