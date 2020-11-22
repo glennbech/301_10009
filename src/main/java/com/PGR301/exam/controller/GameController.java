@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api")
 public class GameController {
 
     private Gson gson = new Gson();
@@ -32,8 +31,14 @@ public class GameController {
         gauge = meterRegistry.gauge("games_owned", new AtomicInteger(0));
     }
 
+    @RequestMapping(value = "/")
+    @ResponseBody
+    public String getErrorPath() {
+        return "Hello";
+    }
+
     // Retrieving a game
-    @RequestMapping(value = "/games/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/games/{name}", method = RequestMethod.GET)
     @ResponseBody
     public String get(@PathVariable String name) {
         Game game = gameService.getGame(name);
@@ -49,7 +54,7 @@ public class GameController {
     }
 
     // Adding a game
-    @RequestMapping(value = "/games/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/games/add", method = RequestMethod.POST)
     @Timed(value = "games_purchase_processtime")
     public String add(@RequestBody Game game) {
         boolean success = gameService.addGame(game);
@@ -66,7 +71,7 @@ public class GameController {
     }
 
     // Deleting a game
-    @RequestMapping(value = "/games/{name}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/games/{name}/delete", method = RequestMethod.DELETE)
     @Timed(value = "games_sale_timetaken", longTask = true)
     public String delete(@PathVariable String name) throws InterruptedException {
         Game game = gameService.getGame(name);
