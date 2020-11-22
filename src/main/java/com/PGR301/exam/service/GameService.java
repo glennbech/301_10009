@@ -23,7 +23,7 @@ public class GameService {
             return false;
         }
 
-        if (name.equals("") || category.equals("") || price == 0) {
+        if (name.equals("") || category.equals("") || price < 0) {
             return false;
         }
 
@@ -31,18 +31,15 @@ public class GameService {
         return true;
     }
 
-    public Game deleteGame(String name) {
-        if (em.find(Game.class, name) == null) {
-            return null;
+    public boolean deleteGame(String name) {
+        Game game = getGame(name);
+
+        if (game == null || !em.contains(game)) {
+            return false;
         }
 
-        if (name.equals("")) {
-            return null;
-        }
-
-        Game gameToDelete = em.find(Game.class, name);
-        em.remove(gameToDelete);
-        return gameToDelete;
+        em.remove(game);
+        return true;
     }
 
     public Game getGame(String name) {

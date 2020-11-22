@@ -3,7 +3,6 @@ package com.PGR301.exam.services;
 
 import com.PGR301.exam.entity.Game;
 import com.PGR301.exam.service.GameService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class GameServiceTest {
+public class GameServiceTest extends ServiceTestBase {
 
     @Autowired
     public GameService gameService;
-
-    @Autowired
-    public ResetService resetService;
-
-    @BeforeEach
-    public void cleanDatabase() {
-        resetService.resetDatabase();
-    }
 
     @Test
     public void createGame() {
@@ -44,10 +35,8 @@ public class GameServiceTest {
     }
 
     @Test
-    public void getNonExistingGame() {
+    public void failGetNonExistingGame() {
         String gameName = "Call of Duty: Cold War";
-        String category = "Shooter";
-        int price = 599;
 
         Game game = gameService.getGame(gameName);
         assertNull(game);
@@ -55,24 +44,16 @@ public class GameServiceTest {
 
     @Test
     public void deleteGame() {
-        String gameName = "Age of Empires III: Definitive Edition";
-        String category = "RTS";
-        int price = 199;
+        Game game = new Game("Age of Empires III: Definitive Edition", "RTS", 199);
+        gameService.addGame(game);
+        assertNotNull(game);
 
-        // Create game and verify that it gets added successfully
-        Game game = new Game(gameName, category, price);
-        boolean success = gameService.addGame(game);
-        assertTrue(success);
-
-        // Verify more
-        Game retrievedGame = gameService.getGame(gameName);
-        assertEquals(gameName, retrievedGame.getName());
-        assertEquals(category, retrievedGame.getCategory());
+        String gameName = game.getName();
 
         // Delete game
-        gameService.deleteGame(gameName);
+        boolean success = gameService.deleteGame(gameName);
+        assertTrue(success);
 
-        // Check if game is null
         Game retrievedGameAfterDeletion = gameService.getGame(gameName);
         assertNull(retrievedGameAfterDeletion);
     }

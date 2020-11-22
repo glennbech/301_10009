@@ -1,9 +1,21 @@
 server:
   port: ${PORT:8080}
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      influx:
+        step: "1s"
 
 spring:
   datasource:
-    url: jdbc:h2:mem:default
+    url: "jdbc:h2:mem:default;DB_CLOSE_DELAY=-1"
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
