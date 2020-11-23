@@ -1,4 +1,6 @@
-## Docker/Travis/Google Cloud Registry
+[![Build Status](https://travis-ci.com/M99/PGR301_10009.svg?token=9rUAuyK5rhXyo46pbgfm&branch=main)](https://travis-ci.com/M99/PGR301_10009)
+
+## Docker/Travis/Google Container Registry
 1. Google Cloud
     - Et prosjekt må opprettes og Container Registry må aktiveres.
 2. Service Account
@@ -8,19 +10,13 @@
     - Etter å ha logget inn via Travis CLI, må følgende kommandoer kjøres.
     ```
     travis encrypt GCP_PROJECT_ID=<project-id> --add env.global
-    travis encrypt IMAGE=<host_name>/<project-id>/<image-name> --add env.global
+    travis encrypt IMAGE=<host-name>/<project-id>/<image-name> --add env.global
     travis encrypt LOGZ_TOKEN=<logzioToken> --add env.global
     travis encrypt LOGZ_URL=<logzioUrl> --add env.global
     travis encrypt-file google-key.json
-    
-    For eksempel:
-    travis encrypt GCP_PROJECT_ID=pgr301-abcdefgh --add env.global
-    travis encrypt IMAGE=gcr.io/pgr301-abcdefgh/123 --add env.global
-    Og lignende med LOGZ_TOKEN og LOGZ_URL, som kan finnes her https://app-eu.logz.io/#/dashboard/data-sources/Java--logbackappender
-    travis encrypt-file google-key.json 
    ```
 4. Github
-    - Push prosjektet til Github, og ved commits til main/master vil et Docker Image bli bygget og pushet til Google Cloud Registry
+    - Ved commits til main/master vil et Docker Image bli bygget og pushet til Google Container Registry.
 
 ## Metrics
 Ved bruk av Micrometer og InfluxDB blir forskjellig statistikk innsamlet og lagret slik at de kan vises i Grafana.
@@ -40,3 +36,6 @@ I grafana-mappen befinner det seg en .json fil som kan importeres til Grafana fo
 
 ####LongTaskTimer
 * `Processing Time (game selling)`: Antall millisekunder det tok å prosessere og finne en kjøper for et spill
+
+## Logging
+Logging foregår ved hjelp av Logz.io, og skjer når et av de tre endepunktene blir aksessert. Informasjonen som blir logget er avhengig av om responsen er sukessfull eller ikke.
