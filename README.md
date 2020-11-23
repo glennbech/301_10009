@@ -21,20 +21,20 @@
 ## Metrics
 Ved bruk av Micrometer og InfluxDB blir forskjellig statistikk innsamlet og lagret slik at de kan vises i Grafana.
 I grafana-mappen befinner det seg en .json fil som kan importeres til Grafana for å bruke et ferdig dashboard.
-####Counter
+#### Counter
 * `Games Purchased`: Antall spill som har blitt kjøpt/lagt til
 * `Games Sold`: Antall spill som har blitt solgt/slettet
 
-####Gauge
+#### Gauge
 * `Owned Games`: Antall spill som har blitt kjøpt/lagt til, minus antall spill som har blitt solgt/slettet
 
-####Distribution Summary
+#### Distribution Summary
 * `Game Prices (purchased)`: Oversikt over prisene på spillene som har blitt kjøpt/lagt til
 
-####Timer
+#### Timer
 * `Processing Time (game purchasing)`: Antall millisekunder det tok å prosessere metoden for et spillkjøp
 
-####LongTaskTimer
+#### LongTaskTimer
 * `Processing Time (game selling)`: Antall millisekunder det tok å prosessere og finne en kjøper for et spill
 
 ## Logging
