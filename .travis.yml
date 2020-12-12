@@ -7,6 +7,8 @@ cache:
     - "$HOME/.m2"
 env:
   global:
+    - GCP_PROJECT_ID=terraform-292215
+    - IMAGE=gcr.io/terraform-292215/exam-10009
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
     - secure: jBVQBHnpzZKjJX2I+m/Tg9nCnQPXWEjDY09rqL2tsUSUtmFh1Hu7o+wiBILDDXiBwlyd0Foxz/ub/wLnQdPQyYFEP+yGgMC20JCQxMvUt4d2sH5JKoMZFWGYlS4Ay/uw2r4+BigFLHDrflxv+pORtuovBK4vNgtCk/NWtVaEMQX3ioafIiYBZtf3y7JACnFOeUwSqCMZOmZce8wAiH2b628jIzPq7thsrpIoCjaOt0R9ogkiP6T3V3JWQxHPDcPpZZ07o4O6lobY51WJDiZTF3Q1skWr3hRpwJ8IWJkyd5ys/HaHlN49iQ+vNxuA6oWgvfTgRhCp8Vmo/bQZcfbkI9EuoYxelWvkdyTW0lfx9mC75uzcTATzRmlHyw9NzpF6B7bLMKVnFp05uULnb6di5Eio80jgG5XjKaR1pq9JhccIWDX8VChQg64hsfyiDS9t/2fj9fXBpQk3ZE2maO7/gNUIcrXzpBR/m9EZZd0m0WiOKn26RIXSEIJOeh/a5CnzHm2uXr7XVa8QI7vv8WhF1beiBl8fa2kA0Iw+0A6mCetIz3eLehTgs8jPVkRrzFRkw9YQUm+VOU5ZKmcc6/mlfKoIstwrMimtUhtYcEKJ/Ty4FPRVjvBj1CYvRQysCRz3uUXw3mJGr4/MQSSm7qUO6SfebyCbClrnBnu0UBaEK+o=
     - secure: fVC8LIm0fdC6d2vwqa9rM/vXRB7n/urdz33XX/5DjjuWlmxT3AC4SpwYieHhqZdm/LPdA1F5zOStzWz2YP+AD2mNxsZxUDwvPIIVGnVWXoCD9bIaynbSBNFaDZyCGrQgmSTIurG+KsOlDfwfMfYIqkrw1mgwwsARERc9X/SvS9nO1U0UCzPBnqUXJSvazM8oSqbSe4a9kzj3uHSYZGHpl81SqKI1g9nc+4luVt/P3s7iXuCtJvTti7mGe8PvPyrf6kwkAZFOWIZcHfyxs8m13F1EkT7FucInxbPHmBO7/NU/krUnmLgF7H9W+arvOlRG72ETavS3sA3KjTsebWF6dP3leWzpejU/oVLTaYyk/ibhZUdQferwydFca+PHSVokOxAyIu+WEzO0LVbCvSoLqdONNReOVbl6fbdCfot0m/0jvhzzbGvQlsQIhc8A8/FI3HZce0PcuV70fmu5VOmsqR6EY5wj8r69Jhp1EU0s0xSJRFdSWet2JTW8oK/cmp2KLqPFWaenE9UwB+E4QsV6lOFiuFLx6eoeRmcA219y4e3cL1pNbgh/SxYGIjySCzJb92NsgxwDqk8+q6dQ2LFwwT+pRsw518Fo+qj7hmQZaC40KAQUCe+ppguCHPclpL/GhYsiQijwFahoa0i4hYOfnX6fJYsVMlAaMDjZNp8kPYQ=
@@ -25,3 +27,6 @@ deploy:
   script: bash ./scripts/docker_push.sh
   on:
     branch: main
+
+
+
